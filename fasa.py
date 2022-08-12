@@ -35,6 +35,8 @@ fonts=None
 hexmap=None
 ship=None
 
+C_GRAY=(200,200,200)
+
 gui=None
 guiwin_debug=None
 guiwin_ship=None
@@ -72,6 +74,8 @@ def init_game():
     hexmap.init(80)
     
     ship = Ship()
+    ship.load_top("fed_enterprise_b_512.png")
+    ship.load_side("fed_enterprise_b_side_512.png")
     ship.rect.centerx = 170
     ship.rect.centery = 159
     
@@ -88,38 +92,16 @@ def init_gui():
     
     gui = pygame_gui.UIManager((SCREENW,SCREENH))
 
-    guiwin_ship = pygame_gui.elements.ui_window.UIWindow(
-        rect=pygame.Rect((500,500),(400,600)),
-        window_display_title="Ship Details",
-        element_id="guiwin_ship",
-        manager=gui
-    )
-
+    """
     guibtn_hello = pygame_gui.elements.UIButton(
         relative_rect=pygame.Rect((10, 400), (90, 40)), 
-        text='Say Hello', 
+        text='test', 
         container=guiwin_ship,
         manager=gui
     )
+    """
     
-    #imgrot = pygame.transform.rotozoom(ship.surf, 90, 0.5).convert_alpha()
-    imgrot = ship.surf.convert_alpha()
-    imgrot.set_colorkey((0,0,0,255))
-
-    r=ship.surf.get_rect()
-    s = pygame.Surface(r.size, pygame.SRCALPHA)
-    pygame.draw.rect(s, (0,0,255,64), s.get_rect())
-    s.blit(imgrot, (0,0))
-    
-    r = s.get_rect()
-    w,h = r.width,r.height
-    
-    guiimg_ship = pygame_gui.elements.ui_image.UIImage(
-        relative_rect=pygame.Rect((10,10),(w,h)),
-        image_surface=s,
-        container=guiwin_ship,
-        manager=gui
-    )
+    ship.build_details_window(gui)
     
     w,h = 400,200
     x = SCREENW-w
@@ -163,36 +145,23 @@ def get_video_info():
 
     SCREENW=1920
     SCREENH=1200
-   
 
 #
 #
 #
-def fontprint(target, text, pos, color=(200,200,200), center=False, background=None, font=fonts):
-    x,y=pos
-    surf = fonts.render(text, True, color, background)
-    if center:
-        r = surf.get_bounding_rect()
-        x-=r.width/2
-        y-=r.height/2
-    target.blit(surf, (x,y))
-    
-#
-#
-#
-def print_debug_info():
+def print_debug_info(target):
     global fonts
     
     debugx=SCREENW-200
     debugy=SCREENH-100
     nl=16
 
-    hexmap.draw_circles(screen)
-    hexmap.draw_labels(screen, fonts)
+    hexmap.draw_circles(target)
+    hexmap.draw_labels(target, fonts)
     
     s = "Ship: " + str(ship.rect.left) + "," + str(ship.rect.top) + \
         " (" + str(ship.rect.centerx) + "," + str(ship.rect.centery) + ")"
-    #fontprint(screen, s, (debugx,debugy))
+    print_text(backbuffer, fonts, debugx, debugy, s, C_GRAY)
     #debugy+=nl
     s += "<br>"
 
@@ -200,7 +169,7 @@ def print_debug_info():
     x,y=mouse
     s += "Mouse: " + str(x) + "," + str(y) 
     s += "<br>"
-    #fontprint(screen, s, (debugx,debugy))
+    print_text(backbuffer, fonts, debugx, debugy, s, C_GRAY)
     #debugy+=nl
 
     index,center = hexmap.get_hex_at(mouse)
@@ -215,7 +184,7 @@ def print_debug_info():
 
 
     if indx>-1:
-        hexmap.draw_hex(screen, (255,0,0), radius=80, position=center, width=8)
+        hexmap.draw_hex(target, (255,0,0), radius=80, position=center, width=8)
         
 
 #
@@ -250,8 +219,6 @@ while True:
                     manager=gui,
                     window_title="Test Message"
                 )
-
-                
                 
         gui.process_events(event)
         
@@ -285,11 +252,12 @@ while True:
     #clear the background
     backbuffer.fill((20,20,20))
     
+
     hexmap.draw(backbuffer, (200,200,200))
     
     ship.draw(backbuffer)
    
-    print_debug_info()
+    print_debug_info(backbuffer)
     
     gui.draw_ui(backbuffer)
 
