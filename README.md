@@ -11,3 +11,5 @@ We'll have to discuss what art assets can be shared.
 I have started building this game using Python 3.10, Pygame 2.1, and support libraries such as pygame_gui. I chose Pygame because it is easy to use, produces quick results, and pygame_gui is very easy to use. In other words, we can get this game up and running quickly. 
 
 Please join this project if you're interested in seeing it get completed! I'm just one guy, one old fan, with a lot of passion for this game, and need help. :)
+
+![08-12-22](https://user-images.githubusercontent.com/46901366/184455703-6fb80a50-df4d-4c17-b4a8-19ae36f92d69.jpg)
