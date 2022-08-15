@@ -40,9 +40,10 @@ C_GRAY=(200,200,200)
 gui=None
 guiwin_debug=None
 guiwin_ship=None
-guibtn_hello=None
 guiimg_ship=None
 guitxt_debug=None
+guibtn_debug_circles=None
+guibtn_debug_labels=None
 
 #
 # Initialization (be sure to call get_video_info() first)
@@ -73,12 +74,6 @@ def init_game():
     hexmap = Hexmap()
     hexmap.init(80)
     
-    ship = Ship()
-    ship.load_top("fed_enterprise_b_512.png")
-    ship.load_side("fed_enterprise_b_side_512.png")
-    ship.rect.centerx = 170
-    ship.rect.centery = 159
-    
 #
 # Initialize the GUI
 #
@@ -86,24 +81,15 @@ def init_gui():
     global gui
     global guiwin_debug
     global guiwin_ship
-    global guibtn_hello
     global guiimg_ship
     global guitxt_debug
+    global guibtn_debug_circles
+    global guibtn_debug_labels
     
     gui = pygame_gui.UIManager((SCREENW,SCREENH))
 
-    """
-    guibtn_hello = pygame_gui.elements.UIButton(
-        relative_rect=pygame.Rect((10, 400), (90, 40)), 
-        text='test', 
-        container=guiwin_ship,
-        manager=gui
-    )
-    """
-    
-    ship.build_details_window(gui)
-    
-    w,h = 400,200
+    #build the debug window
+    w,h = 500,300
     x = SCREENW-w
     y = SCREENH-h
     guiwin_debug = pygame_gui.elements.ui_window.UIWindow(
@@ -112,13 +98,25 @@ def init_gui():
         element_id="guiwin_debug",
         manager=gui
     )
-    
     guitxt_debug = pygame_gui.elements.ui_text_box.UITextBox(
-        relative_rect=pygame.Rect((0,0),(400,200)),
+        relative_rect=pygame.Rect((0,0),(w-10,200)),
         html_text="",
         container=guiwin_debug,
         manager=gui
     )
+    guibtn_debug_circles = pygame_gui.elements.UIButton(
+        relative_rect=pygame.Rect((0, 200), (120, 40)), 
+        text='Circles On', 
+        container=guiwin_debug,
+        manager=gui
+    )
+    guibtn_debug_labels = pygame_gui.elements.UIButton(
+        relative_rect=pygame.Rect((125, 200), (120, 40)), 
+        text='Labels On', 
+        container=guiwin_debug,
+        manager=gui
+    )
+    
 
 
 
@@ -134,14 +132,19 @@ def get_video_info():
     
     print("Desktop modes:")
     sizes=pygame.display.get_desktop_sizes()
-    for s in sizes: print(s)
+    t=""
+    for s in sizes: 
+        t += str(s) + ", "
+    print(t)
 
     print("Display modes:")
     modes=pygame.display.list_modes(depth=0, flags=pygame.FULLSCREEN, display=0)
+    t=""
     for m in modes:
         #ignore oversize modes > desktop
         if (m[0] <= info.current_w and m[1] <= info.current_h):
-            print(m)
+            t += "("+ str(m[0]) + "x" + str(m[1]) + "), "
+    print(t)
 
     SCREENW=1920
     SCREENH=1200
@@ -156,13 +159,15 @@ def print_debug_info(target):
     debugy=SCREENH-100
     nl=16
 
-    hexmap.draw_circles(target)
-    hexmap.draw_labels(target, fonts)
+    if guibtn_debug_circles.text == "Circles On":
+        hexmap.draw_circles(target)
+    
+    if guibtn_debug_labels.text == "Labels On":
+        hexmap.draw_labels(target, fonts)
     
     s = "Ship: " + str(ship.rect.left) + "," + str(ship.rect.top) + \
         " (" + str(ship.rect.centerx) + "," + str(ship.rect.centery) + ")"
     print_text(backbuffer, fonts, debugx, debugy, s, C_GRAY)
-    #debugy+=nl
     s += "<br>"
 
     mouse = pygame.mouse.get_pos()
@@ -170,12 +175,11 @@ def print_debug_info(target):
     s += "Mouse: " + str(x) + "," + str(y) 
     s += "<br>"
     print_text(backbuffer, fonts, debugx, debugy, s, C_GRAY)
-    #debugy+=nl
 
     index,center = hexmap.get_hex_at(mouse)
     posx,posy = center
     indx,indy = index
-    #hex-grid Y starts at 1 (based on the FASA hex map)
+    #hex-grid 'Y' starts at 1 instead of 0 (based on the FASA hex map)
     s += "Hex: " + str(indx)+"," + str(indy+1) + " at " + str((posx,posy))
     s += "<br>"
 
@@ -187,11 +191,40 @@ def print_debug_info(target):
         hexmap.draw_hex(target, (255,0,0), radius=80, position=center, width=8)
         
 
-#
-# main engine start       
-#
+"""
+Ship data for now will include starbases, etc.
+must define the xml structure first!
+"""
+def load_ship(filename):
+    global ship
+    
+    ship = Ship()
+    ship.load_specs("ship_excelsior.xml")
+    print(str(ship.specs))
+    
+    ship.load_top("fed_enterprise_b_512.png")
+    ship.load_side("fed_enterprise_b_side_512.png")
+    ship.rect.centerx = 170
+    ship.rect.centery = 159
+    
+    ship.build_details_window(gui)
+    
+
+"""
+"""
+def load_hexmap(filename):
+    #define the xml structure first!
+    load_ship("ship.xml")
+    
+
+"""
+main engine start       
+"""
 init_game()
 init_gui()
+load_hexmap("map.xml")
+
+
 
 game_over = False
 last_time = 0
@@ -203,27 +236,34 @@ clock = pygame.time.Clock()
 while True:
     timer.tick(30)
     ticks = pygame.time.get_ticks()
-
     time_delta = clock.tick(60)/1000.0
+
     for event in pygame.event.get():
         if event.type == QUIT: sys.exit()
         elif event.type == KEYDOWN:
             if event.key == K_ESCAPE: sys.exit()
-                
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == guibtn_hello:
-                print("Hello!")
-                msgbox = pygame_gui.windows.ui_message_window.UIMessageWindow(
-                    rect=pygame.Rect((500,500),(200,160)),
-                    html_message="This is a message",
-                    manager=gui,
-                    window_title="Test Message"
-                )
-                
+
+        #send events to GUI
         gui.process_events(event)
         
-    gui.update(time_delta)
+        #handle all gui buttons
+        if event.type == pygame_gui.UI_BUTTON_PRESSED:
+        
+            #debug circles toggle
+            if event.ui_element == guibtn_debug_circles:
+                if guibtn_debug_circles.text=='Circles On':
+                    guibtn_debug_circles.set_text('Circles Off')
+                else:
+                    guibtn_debug_circles.set_text('Circles On')
 
+            #debug labels toggle
+            if event.ui_element == guibtn_debug_labels:
+                if guibtn_debug_labels.text=='Labels On':
+                    guibtn_debug_labels.set_text('Labels Off')
+                else:
+                    guibtn_debug_labels.set_text('Labels On')
+
+    #handle input events
     pressed_keys = pygame.key.get_pressed()
     if pygame.time.get_ticks() > inputdelay + 100:
         inputdelay = pygame.time.get_ticks()
@@ -248,6 +288,9 @@ while True:
         if pressed_keys[K_a]:
             ship.dir = ship.dir - 1
             if ship.dir < 0: ship.dir = 5
+
+    #let the GUI perform updates
+    gui.update(time_delta)
     
     #clear the background
     backbuffer.fill((20,20,20))
@@ -269,10 +312,11 @@ while True:
     
 pygame.quit()
 
-
-
-
-
-
-
-    
+"""
+msgbox = pygame_gui.windows.ui_message_window.UIMessageWindow(
+    rect=pygame.Rect((500,500),(200,160)),
+    html_message="Debug circles toggled",
+    manager=gui,
+    window_title="Debug Toggle"
+)
+"""

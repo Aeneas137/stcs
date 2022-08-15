@@ -41,19 +41,11 @@ def print_text(target, font, x, y, text, color=(255,255,255), center=False):
         y-=r.height/2
     target.blit(imgText, (x,y))
 
-# AnimSprite class extends pygame.sprite.Sprite
 class Sprite(pygame.sprite.Sprite):
     
     def __init__(self):
         pygame.sprite.Sprite.__init__(self) 
         self.master_image = None
-        self.frame = 0
-        self.old_frame = -1
-        self.frame_width = 1
-        self.frame_height = 1
-        self.first_frame = 0
-        self.last_frame = 0
-        self.columns = 1
         self.last_time = 0
         self.direction = 0
         self.velocity = Point(0.0,0.0)
@@ -74,56 +66,20 @@ class Sprite(pygame.sprite.Sprite):
     def _getpos(self): return self.rect.topleft
     def _setpos(self,pos): self.rect.topleft = pos  
     position = property(_getpos,_setpos)
-        
 
-    def load(self, filename, width=0, height=0, columns=1):
+    def load(self, filename):
         self.master_image = pygame.image.load(filename).convert_alpha()
-        self.set_image(self.master_image, width, height, columns)
 
-    def set_image(self, image, width=0, height=0, columns=1):
+    def set_image(self, image):
         self.master_image = image
-        if width==0 and height==0:
-            self.frame_width = image.get_width()
-            self.frame_height = image.get_height()
-        else:
-            self.frame_width = width
-            self.frame_height = height
-            rect = self.master_image.get_rect()
-            self.last_frame = (rect.width//width) * (rect.height//height) - 1
-        self.rect = Rect(0,0,self.frame_width,self.frame_height)
-        self.columns = columns
 
-    def update(self, current_time, rate=30):
-        if self.last_frame > self.first_frame:
-            #update animation frame number
-            if current_time > self.last_time + rate:
-                self.frame += 1
-                if self.frame > self.last_frame:
-                    self.frame = self.first_frame
-                self.last_time = current_time
-        else:
-            self.frame = self.first_frame
-
-        #build current frame only if it changed
-        frame_x = (self.frame % self.columns) * self.frame_width
-        frame_y = (self.frame // self.columns) * self.frame_height
-        rect = Rect(frame_x, frame_y, self.frame_width, self.frame_height)
-        self.image = self.master_image.subsurface(rect)
-        self.old_frame = self.frame
-
-
-    # this is only used when bypassing Group
     def draw(self, surface):
         surface.blit(self.image, (self.X,self.Y))
 
     def __str__(self):
-        return str(self.frame) + "," + str(self.first_frame) + \
-               "," + str(self.last_frame) + "," + str(self.frame_width) + \
-               "," + str(self.frame_height) + "," + str(self.columns) + \
-               "," + str(self.rect)
+        return str(self.rect)
 
     
-# AnimSprite class extends pygame.sprite.Sprite
 class AnimSprite(pygame.sprite.Sprite):
     
     def __init__(self):

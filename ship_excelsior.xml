@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship>
+    <classname>Excelsior</classname>
+    <hulltype>Battleship</hulltype>
+</ship>
