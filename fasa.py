@@ -199,7 +199,7 @@ def load_ship(filename):
     global ship
     
     ship = Ship()
-    ship.load_specs("ship_excelsior.xml")
+    ship.load_specs("ship_excelsior.json")
     print(str(ship.specs))
     
     ship.load_top("fed_enterprise_b_512.png")

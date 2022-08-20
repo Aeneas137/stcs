@@ -26,6 +26,7 @@ If you WANT to add a later model, add the model to the classname, e.g. Constella
 
 import pygame
 import pygame_gui
+import json
 from xml.etree import ElementTree as et
 
 class Specs(object):
@@ -37,19 +38,17 @@ class Specs(object):
         #load from specs file
         print("Parsing file: " + filename + "...")
 
-        tree = et.parse(filename)
-        root = tree.getroot()
-        if (root.tag=='ship'):
-            #use this later to work with starbases, etc
-            print("ship data found")
+        with open(filename, "r") as read_file:
+            data = json.load(read_file)
         
-            self.classname = root.find('classname').text
-            self.hulltype = root.find('hulltype').text
-            
+        self.classname = data["classname"]
+        self.hulltype = data["hulltype"]
         
     def save(self,filename):
         #save to specs file
-        print("Specs.save()")
+        print("Saving file: " + filename + "...")
+        with open(filename, "w") as write_file:
+            json.dump(self, write_file)
 
     def __str__(self):
         s = "classname=" + self.classname + "\n"
