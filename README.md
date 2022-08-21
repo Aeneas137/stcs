@@ -12,4 +12,4 @@ I have started building this game using Python 3.10, Pygame 2.1, and support lib
 
 Please join this project if you're interested in seeing it get completed! I'm just one guy, one old fan, with a lot of passion for this game, and need help. :)
 
-![08-12-22](https://user-images.githubusercontent.com/46901366/184455703-6fb80a50-df4d-4c17-b4a8-19ae36f92d69.jpg)
+![08-20-22](https://user-images.githubusercontent.com/46901366/185770718-c2643869-3e2d-476f-b6af-c7ccb2739821.jpg)
