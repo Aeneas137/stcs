@@ -28,14 +28,13 @@
 "impulse_engine_power":			"40",
 
 "weapons": {
-	"beam": {
+	"beam": [{
 		"type": "FH-11",
 		"number": "10"
-	},
-	"beam": {
+	}, {
 		"type": "FH-5",
 		"number": "8"
-	},
+	}],
 	"missile": {
 		"type": "FP-4",
 		"number": "6"
