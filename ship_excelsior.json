@@ -1,21 +1,18 @@
 {
 "class_name": 					"Excelsior",
 "hull_type": 					"Battleship",
-"defense_factor":				"198",
-"weapon_damage_factor":			"182",
-"combat_efficiency":			"36036",
-"superstructure": 				"42",
-"size_length": 					"467",
-"size_width": 					"186",
-"size_height": 					"78",
-"weight": 						"243610",
-"crew": 						"800",
-"total_power": 					"116",
+"superstructure": 				42,
+"size_length": 					467,
+"size_width": 					186,
+"size_height": 					78,
+"weight": 						243610,
+"crew": 						800,
+"total_power": 					116,
 "movement_ratio": 				"6/1",
 
-"shield_type":					"FSS",
-"shield_point_ratio":			"1/4",
-"shield_maximum_power":			"20",
+"defense_factor":				198,
+"weapon_damage_factor":			182,
+"combat_efficiency":			36036,
 
 "warp_engine_type": 			"FTWA",
 "warp_engine_number": 			"2",
@@ -24,52 +21,13 @@
 "warp_engine_maximum_speed":	"12",
 "warp_engine_emergency_speed":	"14",
 
+"shield_type":					"FSS",
+"shield_point_ratio":			"1/4",
+"shield_maximum_power":			"20",
+
 "impulse_engine_type":			"FIG-3",
 "impulse_engine_power":			"40",
 
-"weapons": {
-	"beam": [{
-		"type": "FH-11",
-		"number": "10"
-	}, {
-		"type": "FH-5",
-		"number": "8"
-	}],
-	"missile": {
-		"type": "FP-4",
-		"number": "6"
-	}
-},
-
-"beam_weapon_type":				"FH-11",
-"beam_weapon_number":			"10",
-"beam_firing_arcs_fp":			"2",
-"beam_firing_arcs_f":			"2",
-"beam_firing_arcs_fs":			"2",
-"beam_firing_arcs_ap":			"2",
-"beam_firing_arcs_a":			"0",
-"beam_firing_arcs_as":			"2",
-"beam_firing_chart":			"Y",
-"beam_maximum_power":			"10",
-"beam_damage_modifier_1_min":	"18",
-"beam_damage_modifier_1_max":	"24",
-"beam_damage_modifier_2_min":	"11",
-"beam_damage_modifier_2_max":	"17",
-"beam_damage_modifier_3_min":	"1",
-"beam_damage_modifier_3_max":	"10",
-
-"missile_weapon_type":			"FP-4",
-"missile_weapon_number":		"6",
-"missile_firing_arcs_fp":		"1",
-"missile_firing_arcs_f":		"1",
-"missile_firing_arcs_fs":		"1",
-"missile_firing_arcs_ap":		"1",
-"missile_firing_arcs_a":		"1",
-"missile_firing_arcs_as":		"1",
-"missile_firing_chart":			"S",
-"missile_power_to_arm":			"1",
-"missile_damage":				"20",
-
-
-"__EOF__": ""
+"beam_weapons":                  ["FH-11"],
+"missile_weapons":               ["FP-4"]
 }

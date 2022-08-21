@@ -28,61 +28,46 @@ import sys
 import pygame
 import pygame_gui
 import json
-from xml.etree import ElementTree as et
+
+from weapons.beam_weapons_collection import *
+from weapons.missile_weapons_collection import *
+
+from weapons.beam_weapon import *
+from weapons.missile_weapon import *
+
 
 class Specs(object):
     def __init__(self):
         self.class_name = ""
         self.hull_type = ""
-        self.superstructure = ""
-        self.size_length = ""
-        self.size_width = ""
-        self.size_height = ""
-        self.weight = ""
-        self.crew = ""
-        self.total_power = ""
+        self.superstructure = 0
+        self.size_length = 0
+        self.size_width = 0
+        self.size_height = 0
+        self.weight = 0
+        self.crew = 0
+        self.total_power = 0
         self.movement_ratio = ""
+        self.defense_factor = 0
+        self.weapon_damage_factor = 0
+        self.combat_efficiency = 0        
+
         self.warp_engine_type = ""
         self.warp_engine_number = ""
         self.warp_engine_power = ""
         self.warp_engine_stress_charts = ""
         self.warp_engine_maximum_speed = ""
         self.warp_engine_emergency_speed = ""
+
         self.impulse_engine_type = ""
         self.impulse_engine_power = ""
-        self.beam_weapon_type = ""
-        self.beam_weapon_number = ""
-        self.beam_firing_arcs_fp = ""
-        self.beam_firing_arcs_f = ""
-        self.beam_firing_arcs_fs = ""
-        self.beam_firing_arcs_ap = ""
-        self.beam_firing_arcs_a = ""
-        self.beam_firing_arcs_as = ""
-        self.beam_firing_chart = ""
-        self.beam_maximum_power = ""
-        self.beam_damage_modifier_1_min = ""
-        self.beam_damage_modifier_1_max = ""
-        self.beam_damage_modifier_2_min = ""
-        self.beam_damage_modifier_2_max = ""
-        self.beam_damage_modifier_3_min = ""
-        self.beam_damage_modifier_3_max = ""
-        self.missile_weapon_type = ""
-        self.missile_weapon_number = ""
-        self.missile_firing_arcs_fp = ""
-        self.missile_firing_arcs_f = ""
-        self.missile_firing_arcs_fs = ""
-        self.missile_firing_arcs_ap = ""
-        self.missile_firing_arcs_a = ""
-        self.missile_firing_arcs_as = ""
-        self.missile_firing_chart = ""
-        self.missile_power_to_arm = ""
-        self.missile_damage = ""
+
         self.shield_type = ""
         self.shield_point_ratio = ""
         self.shield_maximum_power = ""
-        self.defense_factor = ""
-        self.weapon_damage_factor = ""
-        self.combat_efficiency = ""
+
+        self.beam_weapons = []
+        self.missile_weapons = []
 
 
     def load(self,filename):
@@ -108,49 +93,40 @@ class Specs(object):
         self.crew = data["crew"]
         self.total_power = data["total_power"]
         self.movement_ratio = data["movement_ratio"]
+
         self.warp_engine_type = data["warp_engine_type"]
         self.warp_engine_number = data["warp_engine_number"]
         self.warp_engine_power = data["warp_engine_power"]
         self.warp_engine_stress_charts = data["warp_engine_stress_charts"]
         self.warp_engine_maximum_speed = data["warp_engine_maximum_speed"]
         self.warp_engine_emergency_speed = data["warp_engine_emergency_speed"]
+
         self.impulse_engine_type = data["impulse_engine_type"]
         self.impulse_engine_power = data["impulse_engine_power"]
-        self.beam_weapon_type = data["beam_weapon_type"]
-        self.beam_weapon_number = data["beam_weapon_number"]
-        self.beam_firing_arcs_fp = data["beam_firing_arcs_fp"]
-        self.beam_firing_arcs_f = data["beam_firing_arcs_f"]
-        self.beam_firing_arcs_fs = data["beam_firing_arcs_fs"]
-        self.beam_firing_arcs_ap = data["beam_firing_arcs_ap"]
-        self.beam_firing_arcs_a = data["beam_firing_arcs_a"]
-        self.beam_firing_arcs_as = data["beam_firing_arcs_as"]
-        self.beam_firing_chart = data["beam_firing_chart"]
-        self.beam_maximum_power = data["beam_maximum_power"]
-        self.beam_damage_modifier_1_min = data["beam_damage_modifier_1_min"]
-        self.beam_damage_modifier_1_max = data["beam_damage_modifier_1_max"]
-        self.beam_damage_modifier_2_min = data["beam_damage_modifier_2_min"]
-        self.beam_damage_modifier_2_max = data["beam_damage_modifier_2_max"]
-        self.beam_damage_modifier_3_min = data["beam_damage_modifier_3_min"]
-        self.beam_damage_modifier_3_max = data["beam_damage_modifier_3_max"]
-        self.missile_weapon_type = data["missile_weapon_type"]
-        self.missile_weapon_number = data["missile_weapon_number"]
-        self.missile_firing_arcs_fp = data["missile_firing_arcs_fp"]
-        self.missile_firing_arcs_f = data["missile_firing_arcs_f"]
-        self.missile_firing_arcs_fs = data["missile_firing_arcs_fs"]
-        self.missile_firing_arcs_ap = data["missile_firing_arcs_ap"]
-        self.missile_firing_arcs_a = data["missile_firing_arcs_a"]
-        self.missile_firing_arcs_as = data["missile_firing_arcs_as"]
-        self.missile_firing_chart = data["missile_firing_chart"]
-        self.missile_power_to_arm = data["missile_power_to_arm"]
-        self.missile_damage = data["missile_damage"]
+
         self.shield_type = data["shield_type"]
         self.shield_point_ratio = data["shield_point_ratio"]
-        self.shield_maximum_power = data["shield_maximum_power"]
+        self.shield_maximum_power = data["shield_maximum_power"]                
+
         self.defense_factor = data["defense_factor"]
-        self.weapon_damage_factor = data["weapon_damage_factor"]
         self.combat_efficiency = data["combat_efficiency"]
+        self.weapon_damage_factor = data["weapon_damage_factor"]
+
+        if "beam_weapons" in data:
+            beamc = BeamWeaponsCollection()
+            for v in data["beam_weapons"]:
+                beam = beamc.get_weapon_by_model(v)
+                if beam == None:
+                    break
+                self.beam_weapons.append(beam)
         
-        
+        if "missile_weapons" in data:
+            missilec = MissileWeaponsCollection()
+            for v in data["missile_weapons"]:
+                missile = missilec.get_weapon_by_model(v)
+                if missile == None:
+                    break
+                self.missile_weapons.append(missile)        
         
     def save(self,filename):
         #save to specs file
@@ -305,16 +281,16 @@ class Ship(object):
         #obviously this needs to pull actual ship data from a file...
         #just testing the look & feel here for now...
         
-        s = "Superstructure Points..............<b>" + self.specs.superstructure + "</b><br>"
+        s = "Superstructure Points..............<b>" + str(self.specs.superstructure) + "</b><br>"
         s+= "Damage Chart.......................<b>" + "C" + "</b><br>"
         s+= "Length/Width/Height (meters).......<b>" + \
-            self.specs.size_length + " / " + \
-            self.specs.size_width + " / " + \
-            self.specs.size_height + "</b><br>"
-        s+= "Weight (metric tons)...............<b>" + self.specs.weight + "</b><br>"
-        s+= "Crew...............................<b>" + self.specs.crew + "</b><br>"
-        s+= "Total Power Units Available........<b>" + self.specs.total_power + "</b><br>"
-        s+= "Movement Point Ratio...............<b>" + self.specs.movement_ratio + "</b><br>"
+            str(self.specs.size_length) + " / " + \
+            str(self.specs.size_width) + " / " + \
+            str(self.specs.size_height) + "</b><br>"
+        s+= "Weight (metric tons)...............<b>" + str(self.specs.weight) + "</b><br>"
+        s+= "Crew...............................<b>" + str(self.specs.crew) + "</b><br>"
+        s+= "Total Power Units Available........<b>" + str(self.specs.total_power) + "</b><br>"
+        s+= "Movement Point Ratio...............<b>" + str(self.specs.movement_ratio) + "</b><br>"
         s+= "Warp Engine Type...................<b>" + \
             self.specs.warp_engine_type + \
             " (x" + self.specs.warp_engine_number + ")" + "</b><br>"
@@ -324,59 +300,19 @@ class Ship(object):
         s+= "  Emergency Speed..................<b>" + "Warp " + self.specs.warp_engine_emergency_speed + "</b><br>"
         s+= "Impulse Engine Type................<b>" + self.specs.impulse_engine_type + "</b><br>"
         s+= "  Power Units Available............<b>" + self.specs.impulse_engine_power + "</b><br>"
-        s+= "Beam Weapon Type...................<b>" + \
-            self.specs.beam_weapon_type + \
-            " (x" + self.specs.beam_weapon_number + ")" + "</b><br>"
-        s+= "  Fore Firing Arcs.................<b>" + \
-            self.specs.beam_firing_arcs_fp + " / " + \
-            self.specs.beam_firing_arcs_f + " / " + \
-            self.specs.beam_firing_arcs_fs + "</b><br>"
-        s+= "  Aft Firing Arcs..................<b>" + \
-            self.specs.beam_firing_arcs_ap + " / " + \
-            self.specs.beam_firing_arcs_a + " / " + \
-            self.specs.beam_firing_arcs_as + "</b><br>"
-        s+= "  Firing Chart.....................<b>" + self.specs.beam_firing_chart + "</b><br>"
-        s+= "  Maximum Power....................<b>" + self.specs.beam_maximum_power + "</b><br>"
-        s+= "  Damage Modifiers" + "<br>"
-        s+= "    +3.............................<b>" + \
-            self.specs.beam_damage_modifier_3_min + \
-            "-" + self.specs.beam_damage_modifier_3_max + "</b><br>"
-        s+= "    +2.............................<b>" + \
-            self.specs.beam_damage_modifier_2_min + \
-            "-" + self.specs.beam_damage_modifier_2_max + "</b><br>"
-        s+= "    +1.............................<b>" + \
-            self.specs.beam_damage_modifier_1_min + \
-            "-" + self.specs.beam_damage_modifier_1_max + "</b><br>"
-        s+= "Beam Weapon Type...................<b>" + "FH-5 (x8)<br>"
-        s+= "  Fore Firing Arcs.................<b>" + "2 / 0 / 2" + "</b><br>"
-        s+= "  Aft Firing Arcs..................<b>" + "2 / 0 / 2" + "</b><br>"
-        s+= "  Firing Chart.....................<b>" + "R" + "</b><br>"
-        s+= "  Maximum Power....................<b>" + "4" + "</b><br>"
-        s+= "  Damage Modifiers" + "<br>"
-        s+= "    +3.............................<b>" + "0-0" + "</b><br>"
-        s+= "    +2.............................<b>" + "1-8" + "</b><br>"
-        s+= "    +1.............................<b>" + "9-16" + "</b><br>"
+
+        for beam in self.specs.beam_weapons:
+            s += beam.htmlStr()
+
+        for missile in self.specs.missile_weapons:
+            s += missile.htmlStr()            
         
-        s+= "Missile Weapon Type................<b>" + \
-            self.specs.missile_weapon_type + \
-            " (x" + self.specs.missile_weapon_number + ")" + "</b><br>"
-        s+= "  Fore Firing Arcs.................<b>" + \
-            self.specs.missile_firing_arcs_fp + " / " + \
-            self.specs.missile_firing_arcs_f + " / " + \
-            self.specs.missile_firing_arcs_fs + "</b><br>"
-        s+= "  Aft Firing Arcs..................<b>" + \
-            self.specs.missile_firing_arcs_ap + " / " + \
-            self.specs.missile_firing_arcs_a + " / " + \
-            self.specs.missile_firing_arcs_as + "</b><br>"
-        s+= "  Firing Chart.....................<b>" + self.specs.missile_firing_chart + "</b><br>"
-        s+= "  Power To Arm.....................<b>" + self.specs.missile_power_to_arm + "</b><br>"
-        s+= "  Damage...........................<b>" + self.specs.missile_damage + "</b><br>"
         s+= "Deflector Shield Type..............<b>" + self.specs.shield_type + "</b><br>"
         s+= "  Shield Point Ratio...............<b>" + self.specs.shield_point_ratio + "</b><br>"
         s+= "  Maximum Shield Power.............<b>" + self.specs.shield_maximum_power + "</b><br>"
-        s+= "Defense Factor.....................<b>" + self.specs.defense_factor + "</b><br>"
-        s+= "Weapon Damage Factor...............<b>" + self.specs.weapon_damage_factor + "</b><br>"
-        s+= "Combat Efficiency..................<b>" + self.specs.combat_efficiency + "</b><br>"
+        s+= "Defense Factor.....................<b>" + str(self.specs.defense_factor) + "</b><br>"
+        s+= "Weapon Damage Factor...............<b>" + str(self.specs.weapon_damage_factor) + "</b><br>"
+        s+= "Combat Efficiency..................<b>" + str(self.specs.combat_efficiency) + "</b><br>"
 
         r = guiwin_ship.rect
         guitxt_ship = pygame_gui.elements.ui_text_box.UITextBox(

@@ -1,0 +1,15 @@
+{
+    "FP-4": {
+        "_weapon_model": "FP-4",
+        "_weapon_number": 0,
+        "_firing_arcs_fp": 0,
+        "_firing_arcs_f": 0,
+        "_firing_arcs_fs": 0,
+        "_firing_arcs_ap": 0,
+        "_firing_arcs_a": 0,
+        "_firing_arcs_as": 0,
+        "_firing_chart": "S",
+        "_power_to_arm": 0,
+        "_damage": 0
+    }
+}

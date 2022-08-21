@@ -1,6 +1,5 @@
 {
     "FH-11": {
-        "_weapon_type": "BEAM",
         "_weapon_model": "FH-11",
         "_weapon_number": 10,
         "_firing_arcs_fp": 2,
@@ -11,8 +10,6 @@
         "_firing_arcs_as": 2,
         "_firing_chart": "Y",
         "_maximum_power": 10,
-        "_power_to_arm": 0,
-        "_damage": 0,
         "_damage_modifier_1_min": 18,
         "_damage_modifier_1_max": 24,
         "_damage_modifier_2_min": 11,
@@ -21,7 +18,6 @@
         "_damage_modifier_3_max": 10
     },
     "FH-5": {
-        "_weapon_type": "BEAM",
         "_weapon_model": "FH-5",
         "_weapon_number": 0,
         "_firing_arcs_fp": 0,
@@ -32,29 +28,6 @@
         "_firing_arcs_as": 0,
         "_firing_chart": "Y",
         "_maximum_power": 0,
-        "_power_to_arm": 0,
-        "_damage": 0,
-        "_damage_modifier_1_min": 0,
-        "_damage_modifier_1_max": 0,
-        "_damage_modifier_2_min": 0,
-        "_damage_modifier_2_max": 0,
-        "_damage_modifier_3_min": 0,
-        "_damage_modifier_3_max": 0
-    },
-    "FP-4": {
-        "_weapon_type": "MISSLE",
-        "_weapon_model": "FP-4",
-        "_weapon_number": 0,
-        "_firing_arcs_fp": 0,
-        "_firing_arcs_f": 0,
-        "_firing_arcs_fs": 0,
-        "_firing_arcs_ap": 0,
-        "_firing_arcs_a": 0,
-        "_firing_arcs_as": 0,
-        "_firing_chart": "Y",
-        "_maximum_power": 0,
-        "_power_to_arm": 0,
-        "_damage": 0,
         "_damage_modifier_1_min": 0,
         "_damage_modifier_1_max": 0,
         "_damage_modifier_2_min": 0,
