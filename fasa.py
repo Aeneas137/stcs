@@ -199,7 +199,7 @@ def load_ship(filename):
     global ship
     
     ship = Ship()
-    ship.load_specs("ship_excelsior.json")
+    ship.load_specs(filename)
     print(str(ship.specs))
     
     ship.load_top("fed_enterprise_b_512.png")
@@ -214,7 +214,7 @@ def load_ship(filename):
 """
 def load_hexmap(filename):
     #define the xml structure first!
-    load_ship("ship.xml")
+    load_ship("ship_excelsior.json")
     
 
 """
