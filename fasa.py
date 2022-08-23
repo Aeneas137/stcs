@@ -196,24 +196,16 @@ Ship data for now will include starbases, etc.
 must define the xml structure first!
 """
 def load_ship(filename):
-    global ship
-    
+    global ship    
     ship = Ship()
-    ship.load_specs(filename)
-    print(str(ship.specs))
-    
-    ship.load_top("fed_enterprise_b_512.png")
-    ship.load_side("fed_enterprise_b_side_512.png")
-    ship.rect.centerx = 170
-    ship.rect.centery = 159
-    
+    ship.load_specs(filename)            
     ship.build_details_window(gui)
     
 
 """
 """
 def load_hexmap(filename):
-    #define the xml structure first!
+    #define the json structure first!
     load_ship("ship_excelsior.json")
     
 
@@ -222,7 +214,7 @@ main engine start
 """
 init_game()
 init_gui()
-load_hexmap("map.xml")
+load_hexmap("map.json")
 
 
 

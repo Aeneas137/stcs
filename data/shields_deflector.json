@@ -1,0 +1,7 @@
+{
+    "FSS": {
+        "_shield_model": "FSS",
+        "_point_ratio": [1,4],
+        "_maximum_power": 20
+    }
+}

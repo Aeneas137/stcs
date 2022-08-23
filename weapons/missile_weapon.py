@@ -41,7 +41,7 @@ class MissileWeapon(BaseWeapon):
         return s        
 
     def htmlStr(self):
-        s = "Beam Weapon Type...................<b>" + str(self._weapon_model) + " (x" + str(self._weapon_number) + ")</b><br>"
+        s = "Missile Weapon Type................<b>" + str(self._weapon_model) + " (x" + str(self._weapon_number) + ")</b><br>"
         s+= "  Fore Firing Arcs.................<b>" + str(self._firing_arcs_fp) + " / " + \
                                                        str(self._firing_arcs_f) + " / " + \
                                                        str(self._firing_arcs_fs) + "</b><br>"

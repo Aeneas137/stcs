@@ -12,7 +12,7 @@ class MissileWeaponsCollection(object):
             print("already loaded")
             return
         else:
-            self.weapon_file_name = "data/missile_weapons.json"
+            self.weapon_file_name = "data/weapons_missile.json"
             self.load_data()
             
     def add_weapon(self, weapon):

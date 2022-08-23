@@ -1,0 +1,10 @@
+{
+    "FTWA": {
+        "_engine_model": "FTWA",        
+        "_number": 2,
+        "_power": 0,
+        "_stress_charts": "D/F",
+        "_maximum_speed": 12,
+        "_emergency_speed": 14
+    }
+}

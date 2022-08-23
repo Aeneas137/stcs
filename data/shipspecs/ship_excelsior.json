@@ -1,0 +1,30 @@
+{
+    "class_name": 					"Excelsior",
+    "hull_type": 					"Battleship",
+    "superstructure": 				42,
+    "size_length": 					467,
+    "size_width": 					186,
+    "size_height": 					78,
+    "weight": 						243610,
+    "crew": 						800,
+    "total_power": 					116,
+    "movement_ratio": 				"6/1",
+    "damage_chart":                 "C",
+
+    "defense_factor":				198,
+    "weapon_damage_factor":			182,
+    "combat_efficiency":			36036,
+
+    "deflector_shield":              "FSS",
+    "impule_engine":                 "FIG-3",
+    "warp_engine":                   "FTWA",
+
+    "beam_weapons":                  ["FH-11", "FH-5"],
+    "missile_weapons":               ["FP-4"],
+
+
+    "top_image":                     "fed_enterprise_b_512.png",
+    "side_image":                    "fed_enterprise_b_side_512.png",
+    "center":                        [170, 159]
+
+}
