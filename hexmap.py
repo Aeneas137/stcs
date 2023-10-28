@@ -1,5 +1,5 @@
 """
-FASA Star Trek Tactical Starship Combat Simulator (TSCS)
+FASA Star Trek - Tactical Starship Combat Simulator (TSCS)
 
 hexmap module
 

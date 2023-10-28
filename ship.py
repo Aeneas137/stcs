@@ -1,5 +1,5 @@
 """
-FASA Star Trek Tactical Starship Combat Simulator (TSCS)
+FASA Star Trek - Tactical Starship Combat Simulator (TSCS)
 
 Ship module
 The goal is to use a pair of high-res ship images and prepare them as needed for use
@@ -98,6 +98,15 @@ class Specs(object):
             print("*** " + str(ex))
             sys.exit()
             
+        #In the age of sail, ships always docked on their left side ("port"),
+        #therefore, the opposite side, on the right, was "star-board".
+        #fp = fore-port (left)
+        #f = fore
+        #fs = fore-starboard (right)
+        #ap = aft-port
+        #a = aft
+        #as = aft-starboard
+        
         self.class_name = data["class_name"]
         self.hull_type = data["hull_type"]
         self.superstructure = data["superstructure"]
@@ -118,12 +127,12 @@ class Specs(object):
         self.impulse_engine_power = data["impulse_engine_power"]
         self.beam_weapon_type = data["beam_weapon_type"]
         self.beam_weapon_number = data["beam_weapon_number"]
-        self.beam_firing_arcs_fp = data["beam_firing_arcs_fp"]
-        self.beam_firing_arcs_f = data["beam_firing_arcs_f"]
-        self.beam_firing_arcs_fs = data["beam_firing_arcs_fs"]
-        self.beam_firing_arcs_ap = data["beam_firing_arcs_ap"]
-        self.beam_firing_arcs_a = data["beam_firing_arcs_a"]
-        self.beam_firing_arcs_as = data["beam_firing_arcs_as"]
+        self.beam_firing_arcs_fp = data["beam_firing_arcs_fp"] 
+        self.beam_firing_arcs_f = data["beam_firing_arcs_f"]   
+        self.beam_firing_arcs_fs = data["beam_firing_arcs_fs"] 
+        self.beam_firing_arcs_ap = data["beam_firing_arcs_ap"] 
+        self.beam_firing_arcs_a = data["beam_firing_arcs_a"]   
+        self.beam_firing_arcs_as = data["beam_firing_arcs_as"] 
         self.beam_firing_chart = data["beam_firing_chart"]
         self.beam_maximum_power = data["beam_maximum_power"]
         self.beam_damage_modifier_1_min = data["beam_damage_modifier_1_min"]
@@ -301,9 +310,7 @@ class Ship(object):
             manager=self.gui
         )
 
-        #specifications
-        #obviously this needs to pull actual ship data from a file...
-        #just testing the look & feel here for now...
+        #assemble specifications text display from ship data in json file
         
         s = "Superstructure Points..............<b>" + self.specs.superstructure + "</b><br>"
         s+= "Damage Chart.......................<b>" + "C" + "</b><br>"

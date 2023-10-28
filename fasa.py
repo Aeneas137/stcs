@@ -1,5 +1,5 @@
 """
-FASA Star Trek Tactical Starship Combat Simulator (TSCS)
+FASA Tactical Starship Combat Simulator (TSCS)
 
 Requires:
     Python 3.10
@@ -55,7 +55,7 @@ def init_game():
     pygame.init()
     get_video_info()
 
-    title = "FASA Starship Tactical Combat Simulator"
+    title = "Starship Tactical Combat Simulator"
     pygame.display.set_caption(title + " (" + str(SCREENW) + "x" + str(SCREENH)+ ")")
 
     screen = pygame.display.set_mode(size=(SCREENW,SCREENH))
@@ -146,8 +146,8 @@ def get_video_info():
             t += "("+ str(m[0]) + "x" + str(m[1]) + "), "
     print(t)
 
-    SCREENW=1920
-    SCREENH=1200
+    SCREENW=1280
+    SCREENH=1024
 
 #
 #

@@ -1,15 +1,12 @@
 Starship Tactical Combat Simulator
 
-Note: This repo will need to be organized at some point; this is very early in development.
+This game has been on the backburner for 30 years. It is time. Anyone who is familiar with FASA will recognize this as a module in FASA's Star Trek: The Role Playing Game. The Starship Tactical Combat Simulator takes place on a hexmap with tokens or miniatures. For copyright and licensing reasons, content cannot be blatantly shared here. We'll have to discuss what art assets can be shared.
 
-This game has been on the backburner for 30 years. It is time. 
-Anyone who is familiar with FASA will recognize this as a module in FASA's Star Trek: The Role Playing Game. 
-The Starship Tactical Combat Simulator takes place on a hexmap with tokens or miniatures.
-For copyright and licensing reasons, content cannot be blatantly shared here. 
-We'll have to discuss what art assets can be shared. 
-
-I have started building this game using Python 3.10, Pygame 2.1, and support libraries such as pygame_gui. I chose Pygame because it is easy to use, produces quick results, and pygame_gui is very easy to use. In other words, we can get this game up and running quickly. 
+I have started building this game using Python 3.10, Pygame 2.1, and support libraries such as pygame_gui. I chose Pygame because it is easy to use, produces quick results, and pygame_gui is very easy to use. In other words, we can get this game up and running quickly.
 
 Please join this project if you're interested in seeing it get completed! I'm just one guy, one old fan, with a lot of passion for this game, and need help. :)
 
+I've paused work on this to focus my attention on Starflight: The Lost Colony (Remastered), which is a port from C++ to Python (actually a rewrite). Portions of that engine will be used for STCS.
+
 ![08-20-22](https://user-images.githubusercontent.com/46901366/185770718-c2643869-3e2d-476f-b6af-c7ccb2739821.jpg)
+
